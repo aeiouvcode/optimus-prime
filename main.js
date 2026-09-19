@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // ---------- renderer / scene ----------
 const canvas = document.getElementById('stage');
@@ -154,8 +155,10 @@ function vents(parent, x, y, z, n, w, h, gap, mat = MAT.dark) {
 }
 
 // ---------- the build ----------
+const turntable = new THREE.Group();
+scene.add(turntable);
 const bot = new THREE.Group();
-scene.add(bot);
+turntable.add(bot);
 
 // ===== pelvis / waist =====
 {
@@ -346,6 +349,47 @@ for (const s of [-1, 1]) {
 // slight heroic lean
 bot.rotation.x = 0.01;
 
+// ---------- ai mesh (parallel track reconstruction) ----------
+const aiBot = new THREE.Group();
+aiBot.visible = false;
+turntable.add(aiBot);
+let aiLoaded = false;
+function loadAI() {
+  if (aiLoaded) return;
+  aiLoaded = true;
+  const el = document.getElementById('loading');
+  el.hidden = false;
+  new GLTFLoader().load('optimus-ai-mesh.glb', (g) => {
+    const root = g.scene;
+    const bbox = new THREE.Box3().setFromObject(root);
+    const size = bbox.getSize(new THREE.Vector3());
+    const scale = 9.4 / size.y;
+    root.scale.setScalar(scale);
+    const c = bbox.getCenter(new THREE.Vector3());
+    root.position.set(-c.x * scale, -bbox.min.y * scale, -c.z * scale);
+    root.traverse((o) => {
+      if (o.isMesh) {
+        o.material.metalness = 0.45;
+        o.material.roughness = 0.5;
+        o.material.envMapIntensity = 1.0;
+      }
+    });
+    aiBot.add(root);
+    el.hidden = true;
+  }, undefined, () => { el.textContent = 'ai mesh failed to load'; });
+}
+const mcode = document.getElementById('mcode');
+const mai = document.getElementById('mai');
+function showModel(which) {
+  bot.visible = which === 'code';
+  aiBot.visible = which === 'ai';
+  mcode.setAttribute('aria-pressed', String(which === 'code'));
+  mai.setAttribute('aria-pressed', String(which === 'ai'));
+  if (which === 'ai') loadAI();
+}
+mcode.addEventListener('click', () => showModel('code'));
+mai.addEventListener('click', () => showModel('ai'));
+
 // ---------- turntable ----------
 let spinning = true;
 const spinBtn = document.getElementById('spin');
@@ -368,7 +412,7 @@ resize();
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
   const dt = clock.getDelta();
-  if (spinning) bot.rotation.y += dt * 0.28;
+  if (spinning) turntable.rotation.y += dt * 0.28;
   controls.update();
   renderer.render(scene, camera);
 });
