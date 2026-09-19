@@ -27,3 +27,10 @@ footer.plate{bottom:clamp(18px,4vw,40px);display:flex;gap:16px;align-items:cente
 .note{position:fixed;right:clamp(16px,4vw,44px);bottom:clamp(18px,4vw,40px);z-index:2;
   max-width:260px;text-align:right;font-size:11px;line-height:1.6;color:var(--bone-dim);pointer-events:none}
 @media (max-width:640px){.note{display:none}}
+
+.seg{display:flex;border:1px solid var(--hair);border-radius:2px;overflow:hidden}
+.seg button{font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--bone-dim);background:transparent;border:0;padding:8px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{color:var(--ink);background:var(--bone)}
+.loading{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--bone-dim)}
