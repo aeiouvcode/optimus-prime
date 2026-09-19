@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Optimus Prime - The Last Knight, sculpted in code</title>
+<meta name="description" content="A hand-built procedural Three.js model of Optimus Prime (The Last Knight). No scans, no assets - every plate is code.">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}
+</script>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<header class="plate">
+  <p class="kicker">Hand-built in Three.js</p>
+  <h1>Optimus Prime</h1>
+  <p class="sub">The Last Knight &middot; sculpted in code, true to the source</p>
+</header>
+<footer class="plate foot">
+  <p class="hint">drag to orbit &middot; scroll to zoom</p>
+  <button id="spin" type="button" aria-pressed="true">turntable: on</button>
+</footer>
+<p class="note">Procedural model - silhouette, proportions and livery follow the film design; it is not scan-level detail.</p>
+<script type="module" src="main.js"></script>
+</body>
+</html>
