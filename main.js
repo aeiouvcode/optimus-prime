@@ -359,7 +359,19 @@ function loadAI() {
   aiLoaded = true;
   const el = document.getElementById('loading');
   el.hidden = false;
-  new GLTFLoader().load('optimus-ai-mesh.glb', (g) => {
+  const assemble = async () => {
+    const man = await (await fetch('ai-mesh/manifest.json')).json();
+    const bufs = [];
+    for (let i = 0; i < man.parts; i++) {
+      const b = await (await fetch(`ai-mesh/part-${String(i).padStart(2, '0')}.bin`)).arrayBuffer();
+      bufs.push(new Uint8Array(b));
+    }
+    const whole = new Uint8Array(man.bytes);
+    let off = 0;
+    for (const b of bufs) { whole.set(b, off); off += b.length; }
+    return whole.buffer;
+  };
+  assemble().then((buf) => new GLTFLoader().parse(buf, '', (g) => {
     const root = g.scene;
     const bbox = new THREE.Box3().setFromObject(root);
     const size = bbox.getSize(new THREE.Vector3());
@@ -376,7 +388,7 @@ function loadAI() {
     });
     aiBot.add(root);
     el.hidden = true;
-  }, undefined, () => { el.textContent = 'ai mesh failed to load'; });
+  }, () => { el.textContent = 'ai mesh failed to load'; })).catch(() => { el.textContent = 'ai mesh failed to load'; });
 }
 const mcode = document.getElementById('mcode');
 const mai = document.getElementById('mai');
