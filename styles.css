@@ -26,7 +26,7 @@ footer.plate{bottom:clamp(18px,4vw,40px);display:flex;gap:16px;align-items:cente
 #spin[aria-pressed="false"]{color:var(--bone-dim)}
 .note{position:fixed;right:clamp(16px,4vw,44px);bottom:clamp(18px,4vw,40px);z-index:2;
   max-width:260px;text-align:right;font-size:11px;line-height:1.6;color:var(--bone-dim);pointer-events:none}
-@media (max-width:640px){.note{display:none}}
+@media (max-width:640px){.note{display:none}.hint{display:none}footer.plate{left:50%;transform:translateX(-50%);gap:8px}}
 
 .seg{display:flex;border:1px solid var(--hair);border-radius:2px;overflow:hidden}
 .seg button{font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
