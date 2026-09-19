@@ -68,7 +68,7 @@ const noiseTex = (() => {
   const x = c.getContext('2d');
   const img = x.createImageData(128, 128);
   for (let i = 0; i < img.data.length; i += 4) {
-    const v = 150 + Math.random() * 105;
+    const v = 190 + Math.random() * 50;
     img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255;
   }
   x.putImageData(img, 0, 0);
@@ -239,7 +239,7 @@ turntable.add(bot);
 
 // ===== head =====
 {
-  const h = new THREE.Group(); h.position.set(0, 8.5, 0); bot.add(h);
+  const h = new THREE.Group(); h.position.set(0, 8.42, 0); h.scale.setScalar(1.14); bot.add(h);
   h.add(cyl(0.2, 0.26, 0.35, MAT.dark, 14).translateY(-0.42));               // neck
   // helmet shell
   const shell = sph(0.46, MAT.blue); shell.scale.set(1, 1.08, 1.02); h.add(shell);
