@@ -17,7 +17,7 @@ const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.06).texture;
 
 const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 120);
-camera.position.set(5.2, 5.6, 10.4);
+camera.position.set(6.4, 6.1, 13.6);
 
 const controls = new OrbitControls(camera, canvas);
 controls.target.set(0, 4.7, 0);
@@ -133,9 +133,9 @@ const redFlameAlpha = flameTexture({ flame: '#a91f24', transparent: true });
 function M(geo, mat, x = 0, y = 0, z = 0) {
   const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); return m;
 }
-const box = (w, h, d, mat) => M(new THREE.BoxGeometry(w, h, d), mat);
-const cyl = (rt, rb, h, mat, seg = 20) => M(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
-const sph = (r, mat, ws = 24, hs = 18) => M(new THREE.SphereGeometry(r, ws, hs), mat);
+const box = (w, h, d, mat, x = 0, y = 0, z = 0) => M(new THREE.BoxGeometry(w, h, d), mat, x, y, z);
+const cyl = (rt, rb, h, mat, seg = 20, x = 0, y = 0, z = 0) => M(new THREE.CylinderGeometry(rt, rb, h, seg), mat, x, y, z);
+const sph = (r, mat, x = 0, y = 0, z = 0, ws = 24, hs = 18) => M(new THREE.SphereGeometry(r, ws, hs), mat, x, y, z);
 
 function rivetRow(parent, from, to, n, mat = MAT.silverHi, r = 0.028) {
   for (let i = 0; i < n; i++) {
