@@ -416,6 +416,8 @@ function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
+  const fit = Math.max(1, 1.1 / camera.aspect);
+  camera.position.set(6.8 * fit, 6.3, 14.8 * fit);
   camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);
