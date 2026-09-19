@@ -19,8 +19,13 @@
 </header>
 <footer class="plate foot">
   <p class="hint">drag to orbit &middot; scroll to zoom</p>
+  <div class="seg" role="group" aria-label="Model">
+    <button id="mcode" type="button" aria-pressed="true">code sculpt</button>
+    <button id="mai" type="button" aria-pressed="false">ai mesh</button>
+  </div>
   <button id="spin" type="button" aria-pressed="true">turntable: on</button>
 </footer>
+<p id="loading" class="loading" hidden>loading ai mesh&hellip;</p>
 <p class="note">Procedural model - silhouette, proportions and livery follow the film design; it is not scan-level detail.</p>
 <script type="module" src="main.js"></script>
 </body>
