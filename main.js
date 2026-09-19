@@ -18,7 +18,7 @@ const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.06).texture;
 
 const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 120);
-camera.position.set(6.4, 6.1, 13.6);
+camera.position.set(6.8, 6.3, 14.8);
 
 const controls = new OrbitControls(camera, canvas);
 controls.target.set(0, 4.7, 0);
@@ -421,6 +421,7 @@ function resize() {
 addEventListener('resize', resize);
 resize();
 
+window.__qa = { face: (a) => { turntable.rotation.y = a; }, spin: (v) => { spinning = v; } };
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
   const dt = clock.getDelta();
